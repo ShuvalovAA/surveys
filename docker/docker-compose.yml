@@ -30,8 +30,6 @@ services:
         condition: service_started
       migrate:
         condition: service_completed_successfully
-      redis:
-        condition: service_started
     expose:
       - "8000"
 
@@ -51,12 +49,6 @@ services:
       interval: 2s
       timeout: 5s
       retries: 10
-
-  redis:
-    platform: linux/amd64
-    networks:
-      - surveys
-    image: redis:7-alpine
 
   nginx:
     platform: linux/amd64

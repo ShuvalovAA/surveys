@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 from question.models import Question
@@ -13,3 +14,5 @@ class UserAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     value = models.JSONField(null=True)
     type = models.CharField(max_length=20, choices=AnswerType.choices, null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

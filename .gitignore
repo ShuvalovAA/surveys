@@ -1,3 +1,7 @@
 .idea/
 docker/postgres
 
+.venv/
+*.pyc
+.env
+db.sqlite3

@@ -2,7 +2,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Literal, Union
 
-from app_types.answer import AnswerType
+from app_types.answer import AnswerType, AnswerTypeMapPType
 
 ValueType = Union[list["ValueType"], Mapping[str, "ValueType"], str, int, float, bool]
 
@@ -17,6 +17,7 @@ class Answer:
 class AnswersData:
     question_id: int
     answer: Answer
+    user_id: int
 
 
 @dataclass
@@ -38,6 +39,13 @@ def ensure_dict(v: ValueType) -> dict:
     else:
         raise TypeError(f"{v} not an dictionary")
 
+def deserialize_data_answer(v:ValueType, type: AnswerType) -> Answer:
+    if not isinstance(v, AnswerTypeMapPType[type]):
+        raise TypeError(f"{v} not an {AnswerTypeMapPType[type]}")
+    return Answer(
+        value=v,
+        type=type,
+    )
 
 def deserialize_data(v: dict) -> CreateData:
     ensure_dict(v)
@@ -47,10 +55,11 @@ def deserialize_data(v: dict) -> CreateData:
         answers=[
             AnswersData(
                 question_id=ensure_int(item["question"]),
-                answer=Answer(
-                    value=item["answer"]["value"],
-                    type=AnswerType(item["answer"]["type"]),
+                answer=deserialize_data_answer(
+                    v=item["value"],
+                    type=AnswerType(item["type"])
                 ),
+                user_id=ensure_int(item["user_id"]),
             )
             for item in v["answers"]
         ],

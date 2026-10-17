@@ -2,10 +2,10 @@ from django.db import transaction
 from user_answers.models import UserAnswer
 
 from .desirealizers import CreateData
-from .models import SurveyResponse
+from survey_response.models import SurveyResponse
 from survey.models import Survey
 from question.models import Question
-
+from django.contrib.auth.models import User
 
 def create_data_port(data: CreateData):
     survey = Survey.objects.get(id=data.survey_id)
@@ -19,6 +19,7 @@ def create_data_port(data: CreateData):
                 question=Question.objects.get(id=v.question_id),
                 value=v.answer.value,
                 type=v.answer.type,
+                user=User.objects.get(id=v.user_id),
             )
             for v in data.answers
         ]
