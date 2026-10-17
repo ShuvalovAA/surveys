@@ -1,0 +1,34 @@
+[project]
+name = "surveys"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Artemy Shuvalov", email = "shuvalovartal@yandex.ru" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "basedpyright>=1.40.2",
+    "django>=6.1.2",
+    "django-async-backend>=6.1.5",
+    "djangorestframework>=3.18.3",
+    "djangorestframework-stubs>=3.18.1",
+    "drf-spectacular>=0.30.0",
+    "mypy>=1.11",
+    "psycopg[binary]>=3.3.6",
+    "pydantic>=2.14.1",
+    "pytest>=9.1.1",
+    "ruff>=0.17.1",
+    "uvicorn>=0.54.0",
+    "whitenoise>=6.12.0",
+]
+
+[project.scripts]
+surveys = "surveys:main"
+
+[build-system]
+requires = ["uv_build>=0.12.18,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = false
