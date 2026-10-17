@@ -5,3 +5,4 @@ docker/postgres
 *.pyc
 .env
 db.sqlite3
+locustfile.py
